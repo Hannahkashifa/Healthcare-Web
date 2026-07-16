@@ -1,0 +1,82 @@
+@model DashboardViewModel
+@{ ViewData["Title"] = "Dashboard"; }
+
+<div class="row mb-4">
+    <div class="col-md-3 mb-3">
+        <div class="card card-stat shadow-sm">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-wallet2 display-5 text-success"></i>
+                <h6 class="text-muted mt-2">Total Income</h6>
+                <h3 class="text-success fw-bold">&#8377; @Model.TotalIncome.ToString("N2")</h3>
+                <small class="text-muted">@Model.TotalIncomeTransactions transactions</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card card-stat shadow-sm">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-cash-stack display-5 text-danger"></i>
+                <h6 class="text-muted mt-2">Total Expense</h6>
+                <h3 class="text-danger fw-bold">&#8377; @Model.TotalExpense.ToString("N2")</h3>
+                <small class="text-muted">@Model.TotalExpenseTransactions transactions</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card card-stat shadow-sm">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-hospital display-5 text-warning"></i>
+                <h6 class="text-muted mt-2">Healthcare Cost</h6>
+                <h3 class="text-warning fw-bold">&#8377; @Model.TotalHealthcareExpense.ToString("N2")</h3>
+                <small class="text-muted">@Model.TotalHealthcareVisits visits</small>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card card-stat shadow-sm">
+            <div class="card-body text-center py-4">
+                <i class="bi bi-piggy-bank display-5 text-primary"></i>
+                <h6 class="text-muted mt-2">Balance</h6>
+                <h3 class="text-primary fw-bold">&#8377; @Model.CurrentBalance.ToString("N2")</h3>
+                <small class="text-muted">@Model.TotalMedicines medicines</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-lightning text-warning me-2"></i>Quick Actions</h5>
+                <div class="d-grid gap-2">
+                    <a asp-controller="Income" asp-action="Create" class="btn btn-outline-success stagger-item">
+                        <i class="bi bi-plus-circle me-2"></i>Add Income
+                    </a>
+                    <a asp-controller="Expense" asp-action="Create" class="btn btn-outline-danger stagger-item">
+                        <i class="bi bi-plus-circle me-2"></i>Add Expense
+                    </a>
+                    <a asp-controller="Healthcare" asp-action="Create" class="btn btn-outline-warning stagger-item">
+                        <i class="bi bi-plus-circle me-2"></i>Add Healthcare Visit
+                    </a>
+                    <a asp-controller="Medicine" asp-action="Create" class="btn btn-outline-info stagger-item">
+                        <i class="bi bi-plus-circle me-2"></i>Add Medicine
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-4">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart text-primary me-2"></i>Summary</h5>
+                <table class="table table-sm mb-0">
+                    <tr class="stagger-item"><td>Total Income</td><td class="text-end text-success fw-bold">&#8377; @Model.TotalIncome.ToString("N2")</td></tr>
+                    <tr class="stagger-item"><td>Total Expense</td><td class="text-end text-danger fw-bold">&#8377; @Model.TotalExpense.ToString("N2")</td></tr>
+                    <tr class="stagger-item"><td>Healthcare Cost</td><td class="text-end text-warning fw-bold">&#8377; @Model.TotalHealthcareExpense.ToString("N2")</td></tr>
+                    <tr class="stagger-item fw-bold"><td><i class="bi bi-arrow-right-circle text-primary me-1"></i>Net Balance</td><td class="text-end text-primary fw-bold">&#8377; @Model.CurrentBalance.ToString("N2")</td></tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,46 @@
+@model AddExpenseViewModel
+@{ ViewData["Title"] = "Add Expense";
+   var categories = new List<string> { "Food", "Transport", "Rent", "Utilities", "Groceries", "Shopping", "Entertainment", "Education", "Travel", "Insurance", "Other" }; }
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5><i class="bi bi-cash-stack text-danger me-2"></i>New Expense</h5>
+                <hr />
+                <div asp-validation-summary="All" class="text-danger mb-3"></div>
+                <form asp-action="Create" method="post">
+                    <div class="mb-3">
+                        <label asp-for="Category" class="form-label"></label>
+                        <select asp-for="Category" class="form-select">
+                            <option value="">-- Select Category --</option>
+                            @foreach (var cat in categories)
+                            {
+                                <option value="@cat">@cat</option>
+                            }
+                        </select>
+                        <span asp-validation-for="Category" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Amount" class="form-label"></label>
+                        <input asp-for="Amount" class="form-control" type="number" step="0.01" min="0" placeholder="0.00" />
+                        <span asp-validation-for="Amount" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="ExpenseDate" class="form-label"></label>
+                        <input asp-for="ExpenseDate" class="form-control" type="date" />
+                        <span asp-validation-for="ExpenseDate" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Description" class="form-label"></label>
+                        <textarea asp-for="Description" class="form-control" rows="3" placeholder="Optional notes..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-success"><i class="bi bi-check-lg"></i> Save</button>
+                    <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts { <partial name="_ValidationScriptsPartial" /> }
