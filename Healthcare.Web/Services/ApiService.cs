@@ -45,5 +45,11 @@ namespace PersonalHealthcareExpense.Web.Services
             AddToken();
             return await _httpClient.DeleteAsync(url);
         }
+
+        public async Task<HttpResponseMessage> PostAnonymousAsync(string url, HttpContent content)
+        {
+            _httpClient.DefaultRequestHeaders.Authorization = null;
+            return await _httpClient.PostAsync(url, content);
+        }
     }
 }

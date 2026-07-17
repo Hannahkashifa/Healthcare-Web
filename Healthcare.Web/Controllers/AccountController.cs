@@ -86,6 +86,63 @@ namespace PersonalHealthcareExpense.Web.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public IActionResult ForgotPassword() => View();
+
+        [HttpPost]
+        public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var content = new StringContent(
+                JsonSerializer.Serialize(new { model.Email }),
+                Encoding.UTF8, "application/json");
+
+            var response = await _api.PostAnonymousAsync("api/Users/forgot-password", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.Success = "If the email exists, a password reset link has been sent. Please check your inbox.";
+                return View(new ForgotPasswordViewModel());
+            }
+
+            var error = await response.Content.ReadAsStringAsync();
+            ViewBag.Error = error;
+            return View(model);
+        }
+
+        [HttpGet]
+        public IActionResult ResetPassword(string token)
+        {
+            if (string.IsNullOrEmpty(token))
+                return RedirectToAction(nameof(Login));
+
+            var model = new ResetPasswordViewModel { Token = token };
+            return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
+        {
+            if (!ModelState.IsValid) return View(model);
+
+            var content = new StringContent(
+                JsonSerializer.Serialize(new { model.Token, model.NewPassword, model.ConfirmPassword }),
+                Encoding.UTF8, "application/json");
+
+            var response = await _api.PostAnonymousAsync("api/Users/reset-password", content);
+
+            if (response.IsSuccessStatusCode)
+            {
+                ViewBag.Success = "Your password has been reset successfully! You can now login.";
+                return View(new ResetPasswordViewModel { Token = model.Token });
+            }
+
+            var error = await response.Content.ReadAsStringAsync();
+            ViewBag.Error = error;
+            return View(model);
+        }
+
         public IActionResult Logout()
         {
             HttpContext.Session.Clear();

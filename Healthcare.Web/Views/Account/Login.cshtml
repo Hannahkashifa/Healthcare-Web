@@ -401,6 +401,9 @@
                 <label class="form-label">Password</label>
                 <input asp-for="Password" type="password" class="form-control" placeholder="Enter password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
+                <div class="text-end mt-2">
+                    <a asp-action="ForgotPassword" style="color:#667eea;font-size:0.85rem;font-weight:600;text-decoration:none;">Forgot Password?</a>
+                </div>
             </div>
             <button type="submit" class="btn-login">
                 <i class="bi bi-box-arrow-in-right me-2"></i>Sign In
