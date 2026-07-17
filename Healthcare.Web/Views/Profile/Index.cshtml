@@ -153,16 +153,22 @@ function uploadProfilePicture(input) {
             txt.replaceWith(newImg);
         }
 
-        var headerImg = document.querySelector('.header-avatar-img');
-        if (headerImg) {
+        var headerImg = document.getElementById('headerAvatar');
+        var headerFallback = document.getElementById('headerAvatarFallback');
+        if (headerImg && headerImg.tagName === 'IMG') {
             headerImg.src = imgUrl;
+            headerImg.style.display = 'block';
+            if (headerFallback) headerFallback.style.display = 'none';
         } else {
             var headerInfo = document.querySelector('.header-user-info');
             if (headerInfo) {
+                var fallbackEl = document.querySelector('.header-avatar-fallback');
+                if (fallbackEl) fallbackEl.remove();
                 var newHeaderImg = document.createElement('img');
                 newHeaderImg.src = imgUrl;
                 newHeaderImg.alt = '';
                 newHeaderImg.className = 'header-avatar-img';
+                newHeaderImg.id = 'headerAvatar';
                 headerInfo.insertBefore(newHeaderImg, headerInfo.firstChild);
             }
         }

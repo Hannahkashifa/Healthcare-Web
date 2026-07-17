@@ -87,17 +87,21 @@
                             </div>
                         </div>
 
-                        <span class="text-muted header-user-info">
+                        <span class="header-user-info">
                             @{ var pp = Context.Session.GetString("ProfilePicture"); }
+                            @{ var userName = Context.Session.GetString("UserName"); }
+                            @{ var initial = string.IsNullOrEmpty(userName) ? "U" : userName[0].ToString().ToUpper(); }
                             @if (!string.IsNullOrEmpty(pp))
                             {
-                                <img src="https://localhost:7230@pp" alt="" class="header-avatar-img" />
+                                <img src="https://localhost:7230@pp" alt="" class="header-avatar-img" id="headerAvatar"
+                                     onerror="this.style.display='none';this.nextElementSibling.style.display='flex';" />
+                                <div class="header-avatar-fallback" style="display:none" id="headerAvatarFallback">@initial</div>
                             }
                             else
                             {
-                                <i class="bi bi-person-circle"></i>
+                                <div class="header-avatar-fallback" id="headerAvatar">@initial</div>
                             }
-                            @Context.Session.GetString("UserName")
+                            <span class="header-user-name">@userName</span>
                         </span>
                     </div>
                 </div>

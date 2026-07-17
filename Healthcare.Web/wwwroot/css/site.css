@@ -162,6 +162,12 @@ body {
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
     line-height: 1.5;
+    max-width: 100vw;
+}
+
+.container-fluid {
+    overflow-x: hidden;
+    max-width: 100%;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -451,14 +457,42 @@ a:hover { color: var(--accent-hover); }
     align-items: center;
     gap: 8px;
     font-size: 0.88rem;
+    color: var(--text-secondary);
+    min-width: 0;
+    overflow: hidden;
+}
+
+.header-user-name {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 120px;
 }
 
 .header-avatar-img {
-    width: 28px;
-    height: 28px;
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
     border-radius: 50%;
     object-fit: cover;
     border: 2px solid var(--border);
+    background: var(--bg-sidebar);
+    display: block;
+}
+
+.header-avatar-fallback {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    font-weight: 700;
+    flex-shrink: 0;
 }
 
 /* =====================================================
@@ -732,6 +766,20 @@ a:hover { color: var(--accent-hover); }
 }
 
 .table.table-sm tr:hover { background: var(--accent-light); }
+
+.table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    border-radius: var(--radius-lg);
+    border: 1px solid var(--border);
+    background: var(--bg-glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+}
+
+.table-wrap .table {
+    margin-bottom: 0;
+}
 
 .table th.sortable::after {
     content: '\F282';
@@ -1319,6 +1367,7 @@ a:hover { color: var(--accent-hover); }
         margin-left: 0 !important;
         padding: 16px !important;
         padding-top: 60px !important;
+        overflow-x: hidden;
     }
 
     .card-stat { animation: scaleIn 0.3s ease forwards; }
@@ -1334,7 +1383,10 @@ a:hover { color: var(--accent-hover); }
         padding-left: 44px;
     }
 
-    .header-right { width: 100%; justify-content: space-between; }
+    .header-right { width: 100%; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+    .header-user-name { display: none; }
+
+    .table-responsive { overflow-x: auto; -webkit-overflow-scrolling: touch; }
 
     .profile-header { padding: 24px 16px; }
     .profile-avatar { width: 64px; height: 64px; font-size: 1.6rem; }
