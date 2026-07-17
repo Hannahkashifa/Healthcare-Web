@@ -48,21 +48,23 @@ namespace PersonalHealthcareExpense.Web.Controllers
             {
                 var meJson = await meResponse.Content.ReadAsStringAsync();
                 var me = JsonSerializer.Deserialize<JsonElement>(meJson);
-                HttpContext.Session.SetString("UserId", me.GetProperty("userId").GetString()!);
-                HttpContext.Session.SetString("UserName", me.GetProperty("name").GetString()!);
+                var userId = me.TryGetProperty("userId", out var uid) ? uid.GetString() :
+                             me.TryGetProperty("UserId", out var uid2) ? uid2.GetString() : null;
+                var name = me.TryGetProperty("name", out var nm) ? nm.GetString() :
+                           me.TryGetProperty("Name", out var nm2) ? nm2.GetString() : null;
+                if (userId != null) HttpContext.Session.SetString("UserId", userId);
+                if (name != null) HttpContext.Session.SetString("UserName", name);
             }
 
             var profileResponse = await _api.GetAsync("api/Users/profile");
             if (profileResponse.IsSuccessStatusCode)
             {
                 var profileJson = await profileResponse.Content.ReadAsStringAsync();
-                var profile = JsonSerializer.Deserialize<JsonElement>(profileJson);
-                if (profile.TryGetProperty("profilePicture", out var ppProp) && ppProp.ValueKind != JsonValueKind.Null)
-                {
-                    var ppValue = ppProp.GetString();
-                    if (!string.IsNullOrEmpty(ppValue))
-                        HttpContext.Session.SetString("ProfilePicture", ppValue);
-                }
+                var profile = JsonSerializer.Deserialize<ViewModels.ProfileViewModel>(profileJson, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+                if (!string.IsNullOrEmpty(profile?.ProfilePicture))
+                    HttpContext.Session.SetString("ProfilePicture", profile.ProfilePicture);
+                if (!string.IsNullOrEmpty(profile?.FullName))
+                    HttpContext.Session.SetString("UserName", profile.FullName);
             }
 
             return RedirectToAction("Index", "Dashboard");

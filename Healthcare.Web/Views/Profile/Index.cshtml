@@ -175,7 +175,7 @@ function uploadProfilePicture(input) {
 
         fetch('/Profile/RefreshSession', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
             .then(function() { hideLoading(); showToast('Profile picture updated!', 'success'); })
-            .catch(function() { hideLoading(); showToast('Profile picture updated!', 'success'); });
+            .catch(function() { hideLoading(); showToast('Profile picture updated! Reload page to see in nav.', 'success'); });
     })
     .catch(function(err) {
         hideLoading();

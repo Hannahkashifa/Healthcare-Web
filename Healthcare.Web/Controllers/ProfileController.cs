@@ -92,17 +92,13 @@ namespace PersonalHealthcareExpense.Web.Controllers
                 return Json(new { success = false });
 
             var json = await response.Content.ReadAsStringAsync();
-            var data = JsonSerializer.Deserialize<JsonElement>(json);
+            var data = JsonSerializer.Deserialize<ProfileViewModel>(json, _json);
 
-            if (data.TryGetProperty("profilePicture", out var ppProp) && ppProp.ValueKind != JsonValueKind.Null)
-            {
-                var ppValue = ppProp.GetString();
-                if (!string.IsNullOrEmpty(ppValue))
-                    HttpContext.Session.SetString("ProfilePicture", ppValue);
-            }
+            if (data?.ProfilePicture != null)
+                HttpContext.Session.SetString("ProfilePicture", data.ProfilePicture);
 
-            if (data.TryGetProperty("fullName", out var nameProp))
-                HttpContext.Session.SetString("UserName", nameProp.GetString() ?? "");
+            if (!string.IsNullOrEmpty(data?.FullName))
+                HttpContext.Session.SetString("UserName", data.FullName);
 
             return Json(new { success = true, profilePicture = HttpContext.Session.GetString("ProfilePicture") });
         }
