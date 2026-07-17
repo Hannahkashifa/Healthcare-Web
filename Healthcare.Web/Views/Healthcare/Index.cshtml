@@ -6,16 +6,37 @@
     <a asp-action="Create" class="btn btn-warning"><i class="bi bi-plus"></i> Add Visit</a>
 </div>
 
+<div class="filter-bar">
+    <div class="filter-group">
+        <label>Search</label>
+        <input type="text" class="form-control" placeholder="Search..." id="searchInput" onkeyup="filterTable('searchInput', 'healthcareTable')">
+    </div>
+    <div class="filter-group">
+        <label>From Date</label>
+        <input type="date" class="form-control" id="dateFrom">
+    </div>
+    <div class="filter-group">
+        <label>To Date</label>
+        <input type="date" class="form-control" id="dateTo">
+    </div>
+    <div class="filter-group" style="flex:0">
+        <label>&nbsp;</label>
+        <div class="d-flex gap-2">
+            <button class="export-btn" onclick="exportToPDF('Report')"><i class="bi bi-file-earmark-pdf"></i> Export</button>
+        </div>
+    </div>
+</div>
+
 <div class="card shadow-sm">
     <div class="card-body p-0">
-        <table class="table table-hover mb-0">
+        <table class="table table-hover mb-0" id="healthcareTable">
             <thead class="table-dark">
                 <tr>
-                    <th>Hospital</th>
-                    <th>Doctor</th>
+                    <th onclick="sortTable('healthcareTable', 0, 'text')">Hospital</th>
+                    <th onclick="sortTable('healthcareTable', 1, 'text')">Doctor</th>
                     <th>Diagnosis</th>
-                    <th>Date</th>
-                    <th>Fee</th>
+                    <th onclick="sortTable('healthcareTable', 3, 'date')">Date</th>
+                    <th onclick="sortTable('healthcareTable', 4, 'num')">Fee</th>
                     <th>Notes</th>
                     <th width="80">Action</th>
                 </tr>
@@ -29,7 +50,7 @@
                             <td>@item.HospitalName</td>
                             <td>@item.DoctorName</td>
                             <td>@item.Diagnosis</td>
-                            <td>@item.VisitDate.ToString("dd MMM yyyy")</td>
+                            <td data-date="@item.VisitDate.ToString("yyyy-MM-dd")">@item.VisitDate.ToString("dd MMM yyyy")</td>
                             <td>&#8377; @item.ConsultationFee.ToString("N2")</td>
                             <td>@item.Notes</td>
                             <td>

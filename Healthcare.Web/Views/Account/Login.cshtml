@@ -1,5 +1,7 @@
 @model PersonalHealthcareExpense.Web.ViewModels.Account.LoginViewModel
-@{ ViewData["Title"] = "Login"; Layout = null; }
+@{
+    ViewData["Title"] = "Login"; Layout = null;
+}
 <!DOCTYPE html>
 <html>
 <head>
@@ -8,7 +10,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet" />
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
         body {
             min-height: 100vh;
@@ -22,29 +28,59 @@
         }
 
         @@keyframes gradientShift {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
+            0% {
+                background-position: 0% 50%;
+            }
+
+            50% {
+                background-position: 100% 50%;
+            }
+
+            100% {
+                background-position: 0% 50%;
+            }
         }
 
         @@keyframes cardAppear {
-            from { opacity: 0; transform: translateY(40px) scale(0.95); }
-            to { opacity: 1; transform: translateY(0) scale(1); }
+            from {
+                opacity: 0;
+                transform: translateY(40px) scale(0.95);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
         }
 
         @@keyframes iconFloat {
-            0%, 100% { transform: translateY(0) scale(1); }
-            50% { transform: translateY(-10px) scale(1.1); }
+            0%, 100% {
+                transform: translateY(0) scale(1);
+            }
+
+            50% {
+                transform: translateY(-10px) scale(1.1);
+            }
         }
 
         @@keyframes glowPulse {
-            0%, 100% { box-shadow: 0 0 20px rgba(102, 126, 234, 0.3); }
-            50% { box-shadow: 0 0 40px rgba(102, 126, 234, 0.6), 0 0 80px rgba(118, 75, 162, 0.2); }
+            0%, 100% {
+                box-shadow: 0 0 20px rgba(102, 126, 234, 0.3);
+            }
+
+            50% {
+                box-shadow: 0 0 40px rgba(102, 126, 234, 0.6), 0 0 80px rgba(118, 75, 162, 0.2);
+            }
         }
 
         @@keyframes shimmerLine {
-            0% { left: -100%; }
-            100% { left: 100%; }
+            0% {
+                left: -100%;
+            }
+
+            100% {
+                left: 100%;
+            }
         }
 
         .login-card {
@@ -59,16 +95,16 @@
             overflow: hidden;
         }
 
-        .login-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 3px;
-            background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
-            animation: shimmerLine 3s ease-in-out infinite;
-        }
+            .login-card::before {
+                content: '';
+                position: absolute;
+                top: 0;
+                left: -100%;
+                width: 100%;
+                height: 3px;
+                background: linear-gradient(90deg, transparent, #667eea, #764ba2, transparent);
+                animation: shimmerLine 3s ease-in-out infinite;
+            }
 
         .icon-wrapper {
             width: 80px;
@@ -83,10 +119,10 @@
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
         }
 
-        .icon-wrapper i {
-            font-size: 2.2rem;
-            color: #fff;
-        }
+            .icon-wrapper i {
+                font-size: 2.2rem;
+                color: #fff;
+            }
 
         .login-card h3 {
             font-weight: 700;
@@ -107,12 +143,12 @@
             background: #f8f9fa;
         }
 
-        .form-control:focus {
-            border-color: #667eea;
-            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
-            background: #fff;
-            transform: scale(1.02);
-        }
+            .form-control:focus {
+                border-color: #667eea;
+                box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+                background: #fff;
+                transform: scale(1.02);
+            }
 
         .form-label {
             font-weight: 600;
@@ -134,28 +170,28 @@
             width: 100%;
         }
 
-        .btn-login::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 0;
-            height: 0;
-            background: rgba(255,255,255,0.3);
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
-            transition: width 0.5s, height 0.5s;
-        }
+            .btn-login::after {
+                content: '';
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                width: 0;
+                height: 0;
+                background: rgba(255,255,255,0.3);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                transition: width 0.5s, height 0.5s;
+            }
 
-        .btn-login:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
-        }
+            .btn-login:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 12px 30px rgba(102, 126, 234, 0.5);
+            }
 
-        .btn-login:active::after {
-            width: 400px;
-            height: 400px;
-        }
+            .btn-login:active::after {
+                width: 400px;
+                height: 400px;
+            }
 
         .alert-danger {
             border-radius: 12px;
@@ -176,26 +212,36 @@
         }
 
         @@keyframes bounceIn {
-            0% { opacity: 0; transform: scale(0.8) translateY(-10px); }
-            60% { transform: scale(1.03) translateY(0); }
-            100% { opacity: 1; transform: scale(1); }
+            0% {
+                opacity: 0;
+                transform: scale(0.8) translateY(-10px);
+            }
+
+            60% {
+                transform: scale(1.03) translateY(0);
+            }
+
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .register-link {
             animation: fadeIn 1s ease 0.7s both;
         }
 
-        .register-link a {
-            color: #667eea;
-            text-decoration: none;
-            font-weight: 600;
-            transition: color 0.3s;
-        }
+            .register-link a {
+                color: #667eea;
+                text-decoration: none;
+                font-weight: 600;
+                transition: color 0.3s;
+            }
 
-        .register-link a:hover {
-            color: #764ba2;
-            text-decoration: underline;
-        }
+                .register-link a:hover {
+                    color: #764ba2;
+                    text-decoration: underline;
+                }
 
         /* Floating particles */
         .particles {
@@ -208,6 +254,7 @@
             overflow: hidden;
             z-index: 0;
         }
+
         .particle {
             position: absolute;
             width: 6px;
@@ -216,24 +263,105 @@
             border-radius: 50%;
             animation: floatParticle linear infinite;
         }
-        .particle:nth-child(1) { left: 10%; animation-duration: 8s; animation-delay: 0s; }
-        .particle:nth-child(2) { left: 25%; animation-duration: 12s; animation-delay: 1s; width: 4px; height: 4px; }
-        .particle:nth-child(3) { left: 40%; animation-duration: 10s; animation-delay: 2s; width: 8px; height: 8px; }
-        .particle:nth-child(4) { left: 55%; animation-duration: 14s; animation-delay: 0.5s; }
-        .particle:nth-child(5) { left: 70%; animation-duration: 9s; animation-delay: 3s; width: 5px; height: 5px; }
-        .particle:nth-child(6) { left: 85%; animation-duration: 11s; animation-delay: 1.5s; width: 7px; height: 7px; }
-        .particle:nth-child(7) { left: 15%; animation-duration: 13s; animation-delay: 2.5s; width: 3px; height: 3px; }
-        .particle:nth-child(8) { left: 60%; animation-duration: 7s; animation-delay: 0.8s; width: 5px; height: 5px; }
+
+            .particle:nth-child(1) {
+                left: 10%;
+                animation-duration: 8s;
+                animation-delay: 0s;
+            }
+
+            .particle:nth-child(2) {
+                left: 25%;
+                animation-duration: 12s;
+                animation-delay: 1s;
+                width: 4px;
+                height: 4px;
+            }
+
+            .particle:nth-child(3) {
+                left: 40%;
+                animation-duration: 10s;
+                animation-delay: 2s;
+                width: 8px;
+                height: 8px;
+            }
+
+            .particle:nth-child(4) {
+                left: 55%;
+                animation-duration: 14s;
+                animation-delay: 0.5s;
+            }
+
+            .particle:nth-child(5) {
+                left: 70%;
+                animation-duration: 9s;
+                animation-delay: 3s;
+                width: 5px;
+                height: 5px;
+            }
+
+            .particle:nth-child(6) {
+                left: 85%;
+                animation-duration: 11s;
+                animation-delay: 1.5s;
+                width: 7px;
+                height: 7px;
+            }
+
+            .particle:nth-child(7) {
+                left: 15%;
+                animation-duration: 13s;
+                animation-delay: 2.5s;
+                width: 3px;
+                height: 3px;
+            }
+
+            .particle:nth-child(8) {
+                left: 60%;
+                animation-duration: 7s;
+                animation-delay: 0.8s;
+                width: 5px;
+                height: 5px;
+            }
 
         @@keyframes floatParticle {
-            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
-            10% { opacity: 0.6; }
-            90% { opacity: 0.6; }
-            100% { transform: translateY(-10vh) rotate(720deg); opacity: 0; }
+            0% {
+                transform: translateY(100vh) rotate(0deg);
+                opacity: 0;
+            }
+
+            10% {
+                opacity: 0.6;
+            }
+
+            90% {
+                opacity: 0.6;
+            }
+
+            100% {
+                transform: translateY(-10vh) rotate(720deg);
+                opacity: 0;
+            }
         }
     </style>
 </head>
 <body>
+    <div style="position:fixed;top:15px;right:15px;z-index:100;">
+        <div class="theme-switcher" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+            <button class="theme-btn" id="themeToggle" style="padding:6px 12px;font-size:0.82rem;background:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.2);backdrop-filter:blur(10px);">
+                <i class="bi bi-palette"></i>
+                <span id="themeToggleText">Light</span>
+                <i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="theme-dropdown" id="themeDropdown">
+                <button class="theme-option" data-theme="light"><span class="theme-dot light"></span> Light</button>
+                <button class="theme-option" data-theme="dark"><span class="theme-dot dark"></span> Dark</button>
+                <button class="theme-option" data-theme="ocean"><span class="theme-dot ocean"></span> Ocean</button>
+                <button class="theme-option" data-theme="rose"><span class="theme-dot rose"></span> Rose</button>
+            </div>
+        </div>
+    </div>
+
     <div class="particles">
         <div class="particle"></div>
         <div class="particle"></div>
@@ -283,5 +411,53 @@
             <a asp-action="Register">Register here</a>
         </div>
     </div>
+
+    <script>
+    (function() {
+        var toggle = document.getElementById('themeToggle');
+        var dropdown = document.getElementById('themeDropdown');
+        var toggleText = document.getElementById('themeToggleText');
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            var labels = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
+            toggleText.textContent = labels[theme] || 'Light';
+            var opts = dropdown.querySelectorAll('.theme-option');
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].getAttribute('data-theme') === theme) {
+                    opts[i].classList.add('active');
+                } else {
+                    opts[i].classList.remove('active');
+                }
+            }
+        }
+
+        var savedTheme = localStorage.getItem('healthcare-theme') || 'light';
+        applyTheme(savedTheme);
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+
+        var options = dropdown.querySelectorAll('.theme-option');
+        for (var i = 0; i < options.length; i++) {
+            options[i].addEventListener('click', function() {
+                var theme = this.getAttribute('data-theme');
+                localStorage.setItem('healthcare-theme', theme);
+                applyTheme(theme);
+                dropdown.classList.remove('show');
+            });
+        }
+
+        document.addEventListener('click', function() {
+            dropdown.classList.remove('show');
+        });
+    })();
+    </script>
 </body>
 </html>

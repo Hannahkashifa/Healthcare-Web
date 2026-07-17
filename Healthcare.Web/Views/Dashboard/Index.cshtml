@@ -44,6 +44,29 @@
     </div>
 </div>
 
+<div class="row mb-4">
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-pie-chart text-primary me-2"></i>Expense Categories</h5>
+                <div class="chart-container">
+                    <canvas id="expensePieChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6 mb-3">
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <h5 class="fw-bold mb-3"><i class="bi bi-bar-chart-line text-success me-2"></i>Monthly Overview</h5>
+                <div class="chart-container">
+                    <canvas id="monthlyBarChart"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
 <div class="row">
     <div class="col-md-6 mb-4">
         <div class="card shadow-sm">
@@ -80,3 +103,26 @@
         </div>
     </div>
 </div>
+
+@section Scripts {
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    fetch('/Dashboard/GetChartData', { credentials: 'same-origin' })
+        .then(function(r) { return r.json(); })
+        .then(function(data) {
+            if (data.expenseByCategory && data.expenseByCategory.length > 0) {
+                var labels = data.expenseByCategory.map(function(x) { return x.category; });
+                var values = data.expenseByCategory.map(function(x) { return x.amount; });
+                renderExpensePieChart('expensePieChart', labels, values);
+            }
+            if (data.monthlyData && data.monthlyData.length > 0) {
+                var mLabels = data.monthlyData.map(function(x) { return x.month; });
+                var mIncome = data.monthlyData.map(function(x) { return x.income; });
+                var mExpense = data.monthlyData.map(function(x) { return x.expense; });
+                renderIncomeExpenseBarChart('monthlyBarChart', mLabels, mIncome, mExpense);
+            }
+        })
+        .catch(function() {});
+});
+</script>
+}

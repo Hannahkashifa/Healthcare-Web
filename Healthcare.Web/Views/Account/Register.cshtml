@@ -90,6 +90,22 @@
     </style>
 </head>
 <body>
+    <div style="position:fixed;top:15px;right:15px;z-index:100;">
+        <div class="theme-switcher" style="font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;">
+            <button class="theme-btn" id="themeToggle" style="padding:6px 12px;font-size:0.82rem;background:rgba(255,255,255,0.9);border-color:rgba(255,255,255,0.2);backdrop-filter:blur(10px);">
+                <i class="bi bi-palette"></i>
+                <span id="themeToggleText">Light</span>
+                <i class="bi bi-chevron-down"></i>
+            </button>
+            <div class="theme-dropdown" id="themeDropdown">
+                <button class="theme-option" data-theme="light"><span class="theme-dot light"></span> Light</button>
+                <button class="theme-option" data-theme="dark"><span class="theme-dot dark"></span> Dark</button>
+                <button class="theme-option" data-theme="ocean"><span class="theme-dot ocean"></span> Ocean</button>
+                <button class="theme-option" data-theme="rose"><span class="theme-dot rose"></span> Rose</button>
+            </div>
+        </div>
+    </div>
+
     <div class="particles">
         <div class="particle"></div><div class="particle"></div><div class="particle"></div>
         <div class="particle"></div><div class="particle"></div><div class="particle"></div>
@@ -137,5 +153,53 @@
             <a asp-action="Login">Sign In</a>
         </div>
     </div>
+
+    <script>
+    (function() {
+        var toggle = document.getElementById('themeToggle');
+        var dropdown = document.getElementById('themeDropdown');
+        var toggleText = document.getElementById('themeToggleText');
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.removeAttribute('data-theme');
+            } else {
+                document.documentElement.setAttribute('data-theme', theme);
+            }
+            var labels = { light: 'Light', dark: 'Dark', ocean: 'Ocean', rose: 'Rose' };
+            toggleText.textContent = labels[theme] || 'Light';
+            var opts = dropdown.querySelectorAll('.theme-option');
+            for (var i = 0; i < opts.length; i++) {
+                if (opts[i].getAttribute('data-theme') === theme) {
+                    opts[i].classList.add('active');
+                } else {
+                    opts[i].classList.remove('active');
+                }
+            }
+        }
+
+        var savedTheme = localStorage.getItem('healthcare-theme') || 'light';
+        applyTheme(savedTheme);
+
+        toggle.addEventListener('click', function(e) {
+            e.stopPropagation();
+            dropdown.classList.toggle('show');
+        });
+
+        var options = dropdown.querySelectorAll('.theme-option');
+        for (var i = 0; i < options.length; i++) {
+            options[i].addEventListener('click', function() {
+                var theme = this.getAttribute('data-theme');
+                localStorage.setItem('healthcare-theme', theme);
+                applyTheme(theme);
+                dropdown.classList.remove('show');
+            });
+        }
+
+        document.addEventListener('click', function() {
+            dropdown.classList.remove('show');
+        });
+    })();
+    </script>
 </body>
 </html>
