@@ -134,24 +134,42 @@ function uploadProfilePicture(input) {
         credentials: 'omit'
     })
     .then(function(r) {
-        hideLoading();
         if (!r.ok) return r.text().then(function(t) { throw new Error(t); });
         return r.json();
     })
     .then(function(data) {
-        showToast('Profile picture updated!', 'success');
+        var imgUrl = 'https://localhost:7230' + data.profilePicture + '?t=' + Date.now();
+
         var img = document.querySelector('.profile-avatar-img');
         var txt = document.querySelector('.profile-avatar-text');
         if (img) {
-            img.src = 'https://localhost:7230' + data.profilePicture + '?t=' + Date.now();
+            img.src = imgUrl;
         } else if (txt) {
             var wrapper = document.querySelector('.profile-avatar-wrapper');
             var newImg = document.createElement('img');
-            newImg.src = 'https://localhost:7230' + data.profilePicture;
+            newImg.src = imgUrl;
             newImg.alt = 'Profile';
             newImg.className = 'profile-avatar-img';
             txt.replaceWith(newImg);
         }
+
+        var headerImg = document.querySelector('.header-avatar-img');
+        if (headerImg) {
+            headerImg.src = imgUrl;
+        } else {
+            var headerInfo = document.querySelector('.header-user-info');
+            if (headerInfo) {
+                var newHeaderImg = document.createElement('img');
+                newHeaderImg.src = imgUrl;
+                newHeaderImg.alt = '';
+                newHeaderImg.className = 'header-avatar-img';
+                headerInfo.insertBefore(newHeaderImg, headerInfo.firstChild);
+            }
+        }
+
+        fetch('/Profile/RefreshSession', { method: 'POST', headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+            .then(function() { hideLoading(); showToast('Profile picture updated!', 'success'); })
+            .catch(function() { hideLoading(); showToast('Profile picture updated!', 'success'); });
     })
     .catch(function(err) {
         hideLoading();

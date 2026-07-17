@@ -83,5 +83,28 @@ namespace PersonalHealthcareExpense.Web.Controllers
             }
             return RedirectToAction(nameof(Index));
         }
+
+        [HttpPost]
+        public async Task<IActionResult> RefreshSession()
+        {
+            var response = await _api.GetAsync("api/Users/profile");
+            if (!response.IsSuccessStatusCode)
+                return Json(new { success = false });
+
+            var json = await response.Content.ReadAsStringAsync();
+            var data = JsonSerializer.Deserialize<JsonElement>(json);
+
+            if (data.TryGetProperty("profilePicture", out var ppProp) && ppProp.ValueKind != JsonValueKind.Null)
+            {
+                var ppValue = ppProp.GetString();
+                if (!string.IsNullOrEmpty(ppValue))
+                    HttpContext.Session.SetString("ProfilePicture", ppValue);
+            }
+
+            if (data.TryGetProperty("fullName", out var nameProp))
+                HttpContext.Session.SetString("UserName", nameProp.GetString() ?? "");
+
+            return Json(new { success = true, profilePicture = HttpContext.Session.GetString("ProfilePicture") });
+        }
     }
 }

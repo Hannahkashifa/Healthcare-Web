@@ -31,6 +31,7 @@
     --input-border: #d2d2d7;
     --scrollbar: #c7c7cc;
     --table-header: #f5f5f7;
+    --table-header-text: #1d1d1f;
     --sidebar-hover: rgba(255,255,255,0.06);
     --sidebar-active: rgba(0, 113, 227, 0.25);
     --sidebar-accent: #0071e3;
@@ -73,6 +74,7 @@
     --input-border: #48484a;
     --scrollbar: #48484a;
     --table-header: #1c1c1e;
+    --table-header-text: #f5f5f7;
     --sidebar-hover: rgba(255,255,255,0.04);
     --sidebar-active: rgba(10, 132, 255, 0.2);
     --sidebar-accent: #0a84ff;
@@ -105,7 +107,8 @@
     --input-bg: #f0f9ff;
     --input-border: #7dd3fc;
     --scrollbar: #7dd3fc;
-    --table-header: #0c4a6e;
+    --table-header: #e0f2fe;
+    --table-header-text: #0c4a6e;
     --sidebar-hover: rgba(255,255,255,0.08);
     --sidebar-active: rgba(14, 165, 233, 0.25);
     --sidebar-accent: #0ea5e9;
@@ -138,7 +141,8 @@
     --input-bg: #fff1f2;
     --input-border: #fda4af;
     --scrollbar: #fda4af;
-    --table-header: #4c0519;
+    --table-header: #ffe4e6;
+    --table-header-text: #4c0519;
     --sidebar-hover: rgba(255,255,255,0.08);
     --sidebar-active: rgba(225, 29, 72, 0.25);
     --sidebar-accent: #e11d48;
@@ -691,7 +695,7 @@ a:hover { color: var(--accent-hover); }
 
 .table thead th {
     background: var(--table-header);
-    color: var(--text-primary);
+    color: var(--table-header-text, var(--text-primary));
     font-weight: 600;
     font-size: 0.78rem;
     text-transform: uppercase;
