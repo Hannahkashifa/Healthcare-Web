@@ -164,14 +164,12 @@ function toggleNotifications() {
 }
 
 function loadNotifications() {
-    const token = document.querySelector('meta[name="token"]')?.content;
-    if (!token) return;
+    var list = document.getElementById('notifList');
+    var count = document.getElementById('notifCount');
 
     fetch('/Dashboard/GetNotifications', { credentials: 'same-origin' })
         .then(function(r) { return r.json(); })
         .then(function(data) {
-            const count = document.getElementById('notifCount');
-            const list = document.getElementById('notifList');
             if (!list) return;
 
             if (!data || data.length === 0) {
@@ -185,7 +183,7 @@ function loadNotifications() {
                 count.style.display = data.length > 0 ? 'inline' : 'none';
             }
 
-            let html = '';
+            var html = '';
             data.forEach(function(n) {
                 html += '<div class="notification-item">' +
                     '<i class="bi ' + (n.icon || 'bi-bell') + ' ' + (n.color || 'text-primary') + '"></i>' +
@@ -194,7 +192,10 @@ function loadNotifications() {
             });
             list.innerHTML = html;
         })
-        .catch(function() {});
+        .catch(function() {
+            if (list) list.innerHTML = '<div class="notification-empty"><i class="bi bi-bell-slash"></i><br>No notifications</div>';
+            if (count) count.style.display = 'none';
+        });
 }
 
 // =====================================================
@@ -384,6 +385,7 @@ document.querySelectorAll('form[data-loading]').forEach(function(form) {
     form.addEventListener('submit', function(e) {
         if (!form.checkValidity()) return;
         showLoading('Saving...');
+        setTimeout(function() { hideLoading(); }, 10000);
     });
 });
 
