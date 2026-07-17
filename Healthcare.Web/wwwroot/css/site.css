@@ -442,6 +442,21 @@ a:hover { color: var(--accent-hover); }
     gap: 14px;
 }
 
+.header-user-info {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.88rem;
+}
+
+.header-avatar-img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--border);
+}
+
 /* =====================================================
    THEME SWITCHER
    ===================================================== */
@@ -1134,6 +1149,64 @@ a:hover { color: var(--accent-hover); }
     color: #fff;
     border: 3px solid rgba(255,255,255,0.2);
     animation: bounceIn 0.5s ease;
+}
+
+.profile-avatar-wrapper {
+    position: relative;
+    width: 96px;
+    height: 96px;
+    margin: 0 auto 14px;
+    border-radius: 50%;
+    cursor: pointer;
+    overflow: hidden;
+    border: 3px solid rgba(255,255,255,0.25);
+    transition: all 0.3s ease;
+}
+
+.profile-avatar-wrapper:hover {
+    border-color: rgba(255,255,255,0.5);
+    transform: scale(1.05);
+}
+
+.profile-avatar-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 50%;
+    display: block;
+}
+
+.profile-avatar-text {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--sidebar-accent);
+    color: #fff;
+    font-size: 2.2rem;
+    font-weight: 700;
+}
+
+.profile-avatar-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.45);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+}
+
+.profile-avatar-wrapper:hover .profile-avatar-overlay {
+    opacity: 1;
+}
+
+.profile-avatar-overlay i {
+    color: #fff;
+    font-size: 1.4rem;
 }
 
 .profile-body {

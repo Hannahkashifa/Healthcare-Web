@@ -5,9 +5,22 @@
     <div class="col-12 col-lg-8">
         <div class="profile-card">
             <div class="profile-header">
-                <div class="profile-avatar">
-                    @(string.IsNullOrEmpty(Model.FullName) ? "U" : Model.FullName[0].ToString().ToUpper())
+                <div class="profile-avatar-wrapper" onclick="document.getElementById('profilePhotoInput').click()" title="Change photo">
+                    @if (!string.IsNullOrEmpty(Model.ProfilePicture))
+                    {
+                        <img src="https://localhost:7230@(Model.ProfilePicture)" alt="Profile" class="profile-avatar-img" />
+                    }
+                    else
+                    {
+                        <div class="profile-avatar-text">
+                            @(string.IsNullOrEmpty(Model.FullName) ? "U" : Model.FullName[0].ToString().ToUpper())
+                        </div>
+                    }
+                    <div class="profile-avatar-overlay">
+                        <i class="bi bi-camera-fill"></i>
+                    </div>
                 </div>
+                <input type="file" id="profilePhotoInput" accept="image/*" style="display:none" onchange="uploadProfilePicture(this)" />
                 <h4 class="fw-bold mb-1">@Model.FullName</h4>
                 <p style="color:rgba(255,255,255,0.7);margin:0;font-size:0.9rem">@Model.Email</p>
             </div>
@@ -96,3 +109,53 @@
         </div>
     </div>
 </div>
+
+<script>
+function uploadProfilePicture(input) {
+    var file = input.files[0];
+    if (!file) return;
+
+    if (file.size > 5 * 1024 * 1024) {
+        showToast('Image must be under 5MB.', 'danger');
+        return;
+    }
+
+    var formData = new FormData();
+    formData.append('file', file);
+
+    showLoading('Uploading...');
+
+    fetch('https://localhost:7230/api/Users/profile-picture', {
+        method: 'POST',
+        headers: {
+            'Authorization': 'Bearer @Context.Session.GetString("Token")'
+        },
+        body: formData,
+        credentials: 'omit'
+    })
+    .then(function(r) {
+        hideLoading();
+        if (!r.ok) return r.text().then(function(t) { throw new Error(t); });
+        return r.json();
+    })
+    .then(function(data) {
+        showToast('Profile picture updated!', 'success');
+        var img = document.querySelector('.profile-avatar-img');
+        var txt = document.querySelector('.profile-avatar-text');
+        if (img) {
+            img.src = 'https://localhost:7230' + data.profilePicture + '?t=' + Date.now();
+        } else if (txt) {
+            var wrapper = document.querySelector('.profile-avatar-wrapper');
+            var newImg = document.createElement('img');
+            newImg.src = 'https://localhost:7230' + data.profilePicture;
+            newImg.alt = 'Profile';
+            newImg.className = 'profile-avatar-img';
+            txt.replaceWith(newImg);
+        }
+    })
+    .catch(function(err) {
+        hideLoading();
+        showToast(err.message || 'Failed to upload image.', 'danger');
+    });
+}
+</script>

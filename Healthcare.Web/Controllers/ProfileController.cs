@@ -22,6 +22,8 @@ namespace PersonalHealthcareExpense.Web.Controllers
 
             var json = await response.Content.ReadAsStringAsync();
             var data = JsonSerializer.Deserialize<ProfileViewModel>(json, _json);
+            if (data?.ProfilePicture != null)
+                HttpContext.Session.SetString("ProfilePicture", data.ProfilePicture);
             return View(data ?? new ProfileViewModel());
         }
 

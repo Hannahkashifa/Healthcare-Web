@@ -87,8 +87,17 @@
                             </div>
                         </div>
 
-                        <span class="text-muted">
-                            <i class="bi bi-person-circle"></i> @Context.Session.GetString("UserName")
+                        <span class="text-muted header-user-info">
+                            @{ var pp = Context.Session.GetString("ProfilePicture"); }
+                            @if (!string.IsNullOrEmpty(pp))
+                            {
+                                <img src="https://localhost:7230@pp" alt="" class="header-avatar-img" />
+                            }
+                            else
+                            {
+                                <i class="bi bi-person-circle"></i>
+                            }
+                            @Context.Session.GetString("UserName")
                         </span>
                     </div>
                 </div>
